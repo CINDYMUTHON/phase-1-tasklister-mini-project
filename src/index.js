@@ -1,28 +1,36 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // your code here
-  
-  form.addEventListener("submit", handleTodo);
-});
-const form = document.getElementById("create-task-form");
 
-function handleTodo(e) {
-  e.preventDefault();
-  
-let newTask = e.target[0].value;
 
-let todo = document.getElementById("tasks");
-let li = document.createElement("li");
-let deleteBtn = document.createElement("button");
-deleteBtn.textContent = "Delete;";
-deleteBtn.classList.add("delete-btn");
-li.textContent = newTask;
-li.append(deleteBtn);
+// Defining text characters for the empty and full hearts for you to use later.
+const EMPTY_HEART = '♡'
+const FULL_HEART = '♥'
 
-todo.appendChild(li);
+// Your JavaScript code goes here!
+let modal = document.getElementById("modal");
+modal.classList.add("hidden")
 
-deleteBtn.addEventListener("click",(e)=>{
-deleteBtn.parentNode.remove()
-
+let likeBtn = document.querySelectorAll("like-glyph");
+likeBtn.addEventListener("click", mimicServerCall)
+let likeBtnArr = Array.from(likeBtn);
+likeBtnArr.forEach((elem)=>{
+  console.log(elem.textContent)
+elem.addEventListener("click", function(){
+  elem.textContent = FULL_HEART;
+  })
 })
 
+//------------------------------------------------------------------------------
+// Don't change the code below: this function mocks the server response
+//------------------------------------------------------------------------------
+
+function mimicServerCall(url="http://mimicServer.example.com", config={}) {
+  return new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      let isRandomFailure = Math.random() < .2
+      if (isRandomFailure) {
+        reject("Random server error. Try again.");
+      } else {
+        resolve("Pretend remote server notified of action!");
+      }
+    }, 300);
+  });
 }
